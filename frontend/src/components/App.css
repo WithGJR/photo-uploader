@@ -1,0 +1,10 @@
+a.site-title {
+    color: #2c2d2c;
+}
+a.site-title:focus, a.site-title:hover{
+    text-decoration: none;
+}
+.container {
+    padding-left: 30px;
+    padding-right: 30px;
+}

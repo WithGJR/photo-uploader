@@ -1,0 +1,10 @@
+.btn-toolbar {
+    margin: 20px;
+}
+.image-editor-button {
+    float: none !important;
+}
+.image-section {
+    position: relative;
+    z-index: 10;
+}
