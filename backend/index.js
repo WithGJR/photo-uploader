@@ -12,6 +12,7 @@ const { images } = require('./controllers');
 
 app.use(koaBody({ 
     multipart: true,
+    formLimit: '10mb',
     formidable : {
         uploadDir: path.join(__dirname, 'assets/images')
     }
