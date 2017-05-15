@@ -12,15 +12,25 @@ class ImageEditor extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            crop: {}
+            crop: {},
+            src: refreshImage(this.props.src)
         };
         _.forEach(['cropChanged', 'cropImageHandler', 'blurImageHandler'], (method) => {
             this[method] = this[method].bind(this);
         });
     }
 
+    componentWillReceiveProps(nextProps) {
+        // Refresh image every time the crop or blur processing is finished 
+        if (this.props.isProcessing && !nextProps.isProcessing) {
+            this.setState({ src: refreshImage(nextProps.src) });
+        }
+    }
+
     cropChanged(_, pixelCrop) {
-        this.setState({ crop: pixelCrop });
+        this.setState({ 
+            crop: pixelCrop
+        });
     }
 
     cropImageHandler() {
@@ -41,7 +51,7 @@ class ImageEditor extends React.Component {
         if (this.props.src === '') {
             return (<div></div>);
         }
-        
+
         return (
             <div>
                 <ButtonToolbar className="text-center">
@@ -54,8 +64,9 @@ class ImageEditor extends React.Component {
 
                     <ReactCrop
                         onComplete={this.cropChanged}
+                        onImageLoaded={this.setDefaultCrop}
                         disabled={this.props.isProcessing}
-                        src={refreshImage(this.props.src)} />
+                        src={this.state.src} />
                 </div>
             </div>
         );

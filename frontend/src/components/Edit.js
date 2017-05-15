@@ -20,11 +20,14 @@ class Edit extends React.Component {
 
         return (
             <div>
-                <ImageEditor
-                    src={this.props.url}
-                    isProcessing={this.props.isRequesting}
-                    onCropImage={this.props.onCropImage}
-                    onBlurImage={this.props.onBlurImage} />
+                {
+                    this.props.url !== '' &&
+                    <ImageEditor
+                        src={this.props.url}
+                        isProcessing={this.props.isRequesting}
+                        onCropImage={this.props.onCropImage}
+                        onBlurImage={this.props.onBlurImage} />
+                }
 
                 <Button onClick={this.props.onSave} bsStyle="primary" bsSize="large" block disabled={this.props.isRequesting}>
                     <span className="glyphicon glyphicon-edit"></span> {' 完成編輯'}
