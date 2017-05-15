@@ -5,6 +5,7 @@ module.exports = {
     context: resolve(__dirname, 'src'),
 
     entry: [
+        'babel-polyfill',
         './index.js'
     ],
     output: {

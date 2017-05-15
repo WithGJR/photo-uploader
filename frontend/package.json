@@ -24,6 +24,7 @@
     "webpack-dev-server": "^2.4.5"
   },
   "dependencies": {
+    "babel-polyfill": "^6.23.0",
     "immutable": "^3.8.1",
     "lodash": "^4.17.4",
     "moment": "^2.18.1",
