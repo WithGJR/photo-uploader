@@ -40,7 +40,7 @@ const images = (state = Map({
             return state.set('isRequesting', true);
         case 'UPLOAD_IMAGE_RECEIVE':
             var newById = state.get('byId').set(action.id, action.image);
-            var newIds = state.get('ids').push(action.id);
+            var newIds = state.get('ids').insert(0, action.id);
             
             return state.set('byId', newById)
                         .set('ids', newIds)

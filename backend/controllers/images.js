@@ -15,7 +15,10 @@ function imageExtensionIsValid(extension) {
 module.exports = {
     async getAll(ctx) {
         var images = await Photo.findAll({
-            where: { public: true }
+            where: { public: true },
+            order: [
+                ['created_at', 'DESC']
+            ]
         });
         ctx.body = images;
     },
