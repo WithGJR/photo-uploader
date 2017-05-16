@@ -2,6 +2,8 @@ import _ from 'lodash';
 import 'whatwg-fetch';
 import { checkHTTPStatus } from '../common';
 
+export const clearError = () => ({ type: 'CLEAR_ERROR_MESSAGE' });
+
 const getAllImagesSuccess = (images) => ({
     type: 'GET_ALL_IMAGES_SUCCESS',
     images

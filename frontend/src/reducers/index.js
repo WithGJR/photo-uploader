@@ -61,6 +61,8 @@ const images = (state = Map({
             return state.set('isRequesting', false)
                         .set('byId', newById)
                         .set('uploadedImageId', null);
+        case 'CLEAR_ERROR_MESSAGE':
+            return state.set('errorMessage', null);
         default:
             return state;
     }

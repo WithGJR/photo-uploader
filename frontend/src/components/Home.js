@@ -4,12 +4,16 @@ import { connect } from 'react-redux';
 import _ from 'lodash';
 import ImageUpload from './ImageUpload.js';
 import ImageList from './ImageList.js';
-import { uploadImageFromFile, uploadImageFromURL } from '../actions';
+import { clearError, uploadImageFromFile, uploadImageFromURL } from '../actions';
 import './Home.css';
 
 class Home extends React.Component {
     constructor(props) {
         super(props);
+    }
+
+    componentDidMount() {
+        this.props.removeErrorMessage();
     }
 
     render() {
@@ -53,6 +57,9 @@ function mapDispatchToProps(dispatch) {
         },
         uploadFromURL(jsonRequestBody) {
             dispatch(uploadImageFromURL(jsonRequestBody));
+        },
+        removeErrorMessage() {
+            dispatch(clearError());
         }
     };
 }
