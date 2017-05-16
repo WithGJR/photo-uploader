@@ -94,8 +94,13 @@ module.exports = {
                     }
 
                     filename = uuid4() + extension;
-                    response.pipe(fs.createWriteStream(`./assets/images/${filename}`));
-                    resolve();
+                    var stream = response.pipe(
+                        fs.createWriteStream(`./assets/images/${filename}`)
+                    );
+                    // Wait until the file is stored successfully
+                    stream.on('finish', () => {
+                        resolve();
+                    });
                 });
             });
         } catch (error) {
