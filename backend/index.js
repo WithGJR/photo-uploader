@@ -4,7 +4,6 @@ const Koa = require('koa');
 const serve = require('koa-static');
 const mount = require('koa-mount');
 const koaBody = require('koa-body');
-const send = require('koa-send');
 const app = new Koa();
 const router = new Router();
 
