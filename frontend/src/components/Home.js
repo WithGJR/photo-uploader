@@ -6,6 +6,7 @@ import ImageUpload from './ImageUpload.js';
 import ImageList from './ImageList.js';
 import { clearError, uploadImageFromFile, uploadImageFromURL } from '../actions';
 import './Home.css';
+import LoadingCircle from './LoadingCircle.js';
 
 class Home extends React.Component {
     constructor(props) {
@@ -22,6 +23,14 @@ class Home extends React.Component {
                 <Redirect to="/edit" />
             );
         }
+        if (!this.props.appStatesHaveBeenLoaded) {
+            return (
+                <div className="loading-container">
+                    <LoadingCircle display />
+                </div>
+            );
+        }
+
 
         return (
             <div>
@@ -45,6 +54,7 @@ class Home extends React.Component {
 
 function mapStateToProps(state) {
     return { 
+        appStatesHaveBeenLoaded: state.app.get('appStatesHaveBeenLoaded'),
         uploadedImageId: state.images.get('uploadedImageId'),
         errorMessage: state.images.get('errorMessage')
     };

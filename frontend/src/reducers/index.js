@@ -68,9 +68,23 @@ const images = (state = Map({
     }
 };
 
+const app = (state = Map({
+    appStatesHaveBeenLoaded: false
+}), action) => {
+    switch (action.type) {
+        case 'LOAD_APP_STATES_START':
+            return state.set('appStatesHaveBeenLoaded', false);
+        case 'LOAD_APP_STATES_END':
+            return state.set('appStatesHaveBeenLoaded', true);
+        default:
+            return state;
+    }
+};
+
 const reducer = combineReducers({
     thumbnails,
-    images
+    images,
+    app
 });
 
 export default reducer;

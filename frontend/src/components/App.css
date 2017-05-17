@@ -8,3 +8,6 @@ a.site-title:focus, a.site-title:hover{
     padding-left: 30px;
     padding-right: 30px;
 }
+.loading-container {
+    position: relative;
+}

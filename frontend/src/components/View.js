@@ -6,6 +6,7 @@ import moment from 'moment';
 import _ from 'lodash';
 import { createThumbnail } from '../actions';
 import GenerateThumbnailForm from './GenerateThumbnailForm.js';
+import LoadingCircle from './LoadingCircle.js';
 
 class View extends React.Component {
     constructor(props) {
@@ -36,6 +37,14 @@ class View extends React.Component {
     }
 
     render() {
+        if (!this.props.appStatesHaveBeenLoaded) {
+            return (
+                <div className="loading-container">
+                    <LoadingCircle display />
+                </div>
+            );
+        }
+
         const { 
             maxWidth, maxHeight,
             thumbnailWidth, thumbnailHeight
@@ -79,12 +88,14 @@ class View extends React.Component {
 
 function mapStateToProps(state, ownProps) {
     const { match } = ownProps;
+    const appStatesHaveBeenLoaded = state.app.get('appStatesHaveBeenLoaded');
     const byId = state.images.get('byId');
     const image = byId.get(match.params.id);
     const thumbnails = state.thumbnails.get('byImageId')
-                                       .get(image.id);
+                                       .get(match.params.id);
 
-    return { 
+    return {
+        appStatesHaveBeenLoaded,
         image,
         thumbnails
     };

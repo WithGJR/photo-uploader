@@ -4,18 +4,23 @@ import { checkHTTPStatus } from '../common';
 
 export const clearError = () => ({ type: 'CLEAR_ERROR_MESSAGE' });
 
+const startLoadingAppStates = () => ({ type: 'LOAD_APP_STATES_START' });
+const endLoadingAppStates = () => ({ type: 'LOAD_APP_STATES_END' });
+
 const getAllImagesSuccess = (images) => ({
     type: 'GET_ALL_IMAGES_SUCCESS',
     images
 });
 
 export const getAllImages = () => (dispatch, getState) => {
+    dispatch(startLoadingAppStates());
     fetch('/images', { 
         method: 'GET'
     }).then((response) => {
         return response.json();
     }).then((json) => {
         dispatch(getAllImagesSuccess(json));
+        dispatch(endLoadingAppStates());
     }).catch((error) => {
         console.log(error);
     });

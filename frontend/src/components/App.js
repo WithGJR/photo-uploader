@@ -35,7 +35,7 @@ class App extends React.Component {
                                 Photo Uploader <small>Crop, Blur</small>
                             </PageHeader>
                         </Link>
-            
+
                         <Route exact path="/" render={() => {
                             return (
                                 <Home />
