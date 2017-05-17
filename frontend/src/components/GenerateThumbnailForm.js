@@ -1,16 +1,36 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Image, FormGroup, FormControl, ControlLabel, Button, Alert } from 'react-bootstrap';
+import { Image, FormGroup, FormControl, ControlLabel, Button, Alert, Tooltip } from 'react-bootstrap';
+import Clipboard from 'clipboard';
+import _ from 'lodash';
+import './GenerateThumbnailForm.css';
 
 class GenerateThumbnailForm extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { width: this.props.maxWidth, height: this.props.maxHeight };
-        this.changeWidth = this.changeWidth.bind(this);
-        this.changeHeight = this.changeHeight.bind(this);
-        this.submit = this.submit.bind(this);
-        this.selectAllText = this.selectAllText.bind(this);
-        this.getFullURL = this.getFullURL.bind(this);
+        this.state = { 
+            width: this.props.maxWidth, 
+            height: this.props.maxHeight,
+            hasCopiedToClipboard: false
+        };
+        
+        this.clipboard = new Clipboard('#urlInput', {
+            text: () => {
+                return this.urlInput.value;
+            }
+        });
+        this.clipboard.on('success', (e) => {
+            this.urlInput.focus();
+            this.urlInput.select();
+            this.setState({ hasCopiedToClipboard: true });
+            setTimeout(() => {
+                this.setState({ hasCopiedToClipboard: false });
+            }, 2000);
+        });
+
+        _.forEach(['changeWidth', 'changeHeight', 'submit', 'getFullURL'], (method) => {
+            this[method] = this[method].bind(this);
+        });
     }
 
     changeWidth(event) {
@@ -32,10 +52,6 @@ class GenerateThumbnailForm extends React.Component {
     submit(event) {
         event.preventDefault();
         this.props.onSubmit(this.state.width, this.state.height);
-    }
-
-    selectAllText(event) {
-        this.urlInput.select();
     }
 
     getFullURL(path) {
@@ -81,18 +97,31 @@ class GenerateThumbnailForm extends React.Component {
 
                 <hr/>
 
-                {
-                    this.props.src &&
-                    <div>
+                <div>
+                    {
+                        this.props.src &&
                         <Alert bsStyle="info" className="text-center">複製連結</Alert>
-                        <input 
-                            ref={(input) => { this.urlInput = input; }}
-                            type="text" 
-                            className="form-control"
-                            onFocus={this.selectAllText} 
-                            value={this.getFullURL(this.props.src)} />
+                    }
+
+                    <div className="clipboard-hint">
+                        {
+                            this.props.src && this.state.hasCopiedToClipboard &&
+                            <Tooltip placement="top" className="in" id="tooltip-top">
+                                網址已複製
+                            </Tooltip>
+                        }
                     </div>
-                }
+
+                    {
+                        this.props.src &&
+                        <input
+                            id="urlInput"
+                            ref={(input) => { this.urlInput = input; }}
+                            type="text"
+                            className="form-control"
+                            value={this.getFullURL(this.props.src)} />
+                    }
+                </div>
 
                 {
                     this.props.src &&
